@@ -5,11 +5,11 @@ import (
 	"github.com/zercle/gofiber-skelton/pkg/models"
 )
 
-type BookUsecase struct {
+type BookUseCase struct {
 	mock.Mock
 }
 
-func (_m *BookUsecase) GetBook(bookID uint) (book models.Book, err error) {
+func (_m *BookUseCase) GetBook(bookID uint) (book models.Book, err error) {
 	ret := _m.Called(bookID)
 
 	var r0 models.Book
@@ -28,7 +28,7 @@ func (_m *BookUsecase) GetBook(bookID uint) (book models.Book, err error) {
 
 	return r0, r1
 }
-func (_m *BookUsecase) GetBooks(criteria models.Book) (books []models.Book, err error) {
+func (_m *BookUseCase) GetBooks(criteria models.Book) (books []models.Book, err error) {
 	ret := _m.Called(criteria)
 
 	var r0 []models.Book
@@ -48,7 +48,7 @@ func (_m *BookUsecase) GetBooks(criteria models.Book) (books []models.Book, err 
 	return r0, r1
 }
 
-func (_m *BookUsecase) CreateBook(book *models.Book) (err error) {
+func (_m *BookUseCase) CreateBook(book *models.Book) (err error) {
 	ret := _m.Called(book)
 
 	var r0 error
@@ -60,7 +60,7 @@ func (_m *BookUsecase) CreateBook(book *models.Book) (err error) {
 	return r0
 }
 
-func (_m *BookUsecase) EditBook(bookID uint, book models.Book) (err error) {
+func (_m *BookUseCase) EditBook(bookID uint, book models.Book) (err error) {
 	ret := _m.Called(bookID, book)
 
 	var r0 error
@@ -72,7 +72,7 @@ func (_m *BookUsecase) EditBook(bookID uint, book models.Book) (err error) {
 	return r0
 }
 
-func (_m *BookUsecase) DeleteBook(bookID uint) (err error) {
+func (_m *BookUseCase) DeleteBook(bookID uint) (err error) {
 	ret := _m.Called(bookID)
 
 	var r0 error

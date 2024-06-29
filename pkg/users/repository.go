@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	helpers "github.com/zercle/gofiber-helpers"
+	"github.com/zercle/gofiber-skelton/pkg/constants"
 	"github.com/zercle/gofiber-skelton/pkg/domain"
 	"github.com/zercle/gofiber-skelton/pkg/models"
 	"gorm.io/gorm"
@@ -13,7 +14,7 @@ type userRepository struct {
 	mainDbConn *gorm.DB
 }
 
-func NewUserRepository(mainDbConn *gorm.DB) domain.UserReposiroty {
+func NewUserRepository(mainDbConn *gorm.DB) domain.UserRepository {
 	return &userRepository{
 		mainDbConn: mainDbConn,
 	}
@@ -21,7 +22,7 @@ func NewUserRepository(mainDbConn *gorm.DB) domain.UserReposiroty {
 
 func (r *userRepository) GetUser(userID string) (user models.User, err error) {
 	if r.mainDbConn == nil {
-		err = fmt.Errorf("%s \nErr: %+v", helpers.WhereAmI(), "database has gone away.")
+		err = fmt.Errorf("%s \nErr: %+v", helpers.WhereAmI(), constants.ErrDBGone)
 		return
 	}
 
@@ -34,7 +35,7 @@ func (r *userRepository) GetUser(userID string) (user models.User, err error) {
 
 func (r *userRepository) GetUsers(criteria models.User) (users []models.User, err error) {
 	if r.mainDbConn == nil {
-		err = fmt.Errorf("%s \nErr: %+v", helpers.WhereAmI(), "database has gone away.")
+		err = fmt.Errorf("%s \nErr: %+v", helpers.WhereAmI(), constants.ErrDBGone)
 		return
 	}
 
@@ -55,7 +56,7 @@ func (r *userRepository) GetUsers(criteria models.User) (users []models.User, er
 
 func (r *userRepository) CreateUser(user *models.User) (err error) {
 	if r.mainDbConn == nil {
-		err = fmt.Errorf("%s \nErr: %+v", helpers.WhereAmI(), "database has gone away.")
+		err = fmt.Errorf("%s \nErr: %+v", helpers.WhereAmI(), constants.ErrDBGone)
 		return
 	}
 
@@ -75,7 +76,7 @@ func (r *userRepository) CreateUser(user *models.User) (err error) {
 
 func (r *userRepository) EditUser(userID string, user models.User) (err error) {
 	if r.mainDbConn == nil {
-		err = fmt.Errorf("%s \nErr: %+v", helpers.WhereAmI(), "database has gone away.")
+		err = fmt.Errorf("%s \nErr: %+v", helpers.WhereAmI(), constants.ErrDBGone)
 		return
 	}
 
@@ -96,7 +97,7 @@ func (r *userRepository) EditUser(userID string, user models.User) (err error) {
 
 func (r *userRepository) DeleteUser(userID string) (err error) {
 	if r.mainDbConn == nil {
-		err = fmt.Errorf("%s \nErr: %+v", helpers.WhereAmI(), "database has gone away.")
+		err = fmt.Errorf("%s \nErr: %+v", helpers.WhereAmI(), constants.ErrDBGone)
 		return
 	}
 

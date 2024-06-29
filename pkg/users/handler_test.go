@@ -37,7 +37,7 @@ func TestGetUserHandler(t *testing.T) {
 	req, err := http.NewRequest("GET", "/api/v1/user/"+mockUser.ID, nil)
 	assert.NoError(t, err)
 
-	mockUCase := users.NewUserUsecase(mockRepo)
+	mockUCase := users.NewUserUseCase(mockRepo)
 	users.NewUserHandler(app.Group("/api/v1/user"), mockUCase)
 
 	resp, err := app.Test(req)

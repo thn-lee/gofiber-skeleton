@@ -5,11 +5,11 @@ import (
 	"github.com/zercle/gofiber-skelton/pkg/models"
 )
 
-type UserUsecase struct {
+type UserUseCase struct {
 	mock.Mock
 }
 
-func (_m *UserUsecase) GetUser(userID string) (user models.User, err error) {
+func (_m *UserUseCase) GetUser(userID string) (user models.User, err error) {
 	ret := _m.Called(userID)
 
 	var r0 models.User
@@ -28,7 +28,7 @@ func (_m *UserUsecase) GetUser(userID string) (user models.User, err error) {
 	return r0, r1
 }
 
-func (_m *UserUsecase) GetUsers(criteria models.User) (users []models.User, err error) {
+func (_m *UserUseCase) GetUsers(criteria models.User) (users []models.User, err error) {
 	ret := _m.Called(criteria)
 
 	var r0 []models.User
@@ -47,7 +47,7 @@ func (_m *UserUsecase) GetUsers(criteria models.User) (users []models.User, err 
 	return r0, r1
 }
 
-func (_m *UserUsecase) CreateUser(user *models.User) (err error) {
+func (_m *UserUseCase) CreateUser(user *models.User) (err error) {
 	ret := _m.Called(user)
 
 	var r0 error
@@ -59,7 +59,7 @@ func (_m *UserUsecase) CreateUser(user *models.User) (err error) {
 	return r0
 }
 
-func (_m *UserUsecase) EditUser(userID string, user models.User) (err error) {
+func (_m *UserUseCase) EditUser(userID string, user models.User) (err error) {
 	ret := _m.Called(userID)
 
 	var r0 error
@@ -71,7 +71,7 @@ func (_m *UserUsecase) EditUser(userID string, user models.User) (err error) {
 	return r0
 }
 
-func (_m *UserUsecase) DeleteUser(userID string) (err error) {
+func (_m *UserUseCase) DeleteUser(userID string) (err error) {
 	ret := _m.Called(userID)
 
 	var r0 error

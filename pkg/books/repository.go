@@ -5,29 +5,30 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	helpers "github.com/zercle/gofiber-helpers"
+	"github.com/zercle/gofiber-skelton/pkg/constants"
 	"github.com/zercle/gofiber-skelton/pkg/domain"
 	"github.com/zercle/gofiber-skelton/pkg/models"
 	"gorm.io/gorm"
 )
 
-type bookReposiroty struct {
+type bookRepository struct {
 	mainDbConn *gorm.DB
 }
 
 func NewBookRepository(mainDbConn *gorm.DB) domain.BookRepository {
-	return &bookReposiroty{
+	return &bookRepository{
 		mainDbConn: mainDbConn,
 	}
 }
 
-func (r *bookReposiroty) DbMigrator() (err error) {
+func (r *bookRepository) DbMigrator() (err error) {
 	err = r.mainDbConn.AutoMigrate(&models.Book{})
 	return
 }
 
-func (r *bookReposiroty) CreateBook(book *models.Book) (err error) {
+func (r *bookRepository) CreateBook(book *models.Book) (err error) {
 	if r.mainDbConn == nil {
-		err = helpers.NewError(fiber.StatusServiceUnavailable, helpers.WhereAmI(), "Database server has gone away")
+		err = helpers.NewError(fiber.StatusServiceUnavailable, helpers.WhereAmI(), constants.ErrDBGone)
 		return
 	}
 
@@ -44,9 +45,9 @@ func (r *bookReposiroty) CreateBook(book *models.Book) (err error) {
 	return
 }
 
-func (r *bookReposiroty) EditBook(bookID string, book models.Book) (err error) {
+func (r *bookRepository) EditBook(bookID string, book models.Book) (err error) {
 	if r.mainDbConn == nil {
-		err = helpers.NewError(fiber.StatusServiceUnavailable, helpers.WhereAmI(), "Database server has gone away")
+		err = helpers.NewError(fiber.StatusServiceUnavailable, helpers.WhereAmI(), constants.ErrDBGone)
 		return
 	}
 
@@ -65,9 +66,9 @@ func (r *bookReposiroty) EditBook(bookID string, book models.Book) (err error) {
 	return
 }
 
-func (r *bookReposiroty) DeleteBook(bookID string) (err error) {
+func (r *bookRepository) DeleteBook(bookID string) (err error) {
 	if r.mainDbConn == nil {
-		err = helpers.NewError(fiber.StatusServiceUnavailable, helpers.WhereAmI(), "Database server has gone away")
+		err = helpers.NewError(fiber.StatusServiceUnavailable, helpers.WhereAmI(), constants.ErrDBGone)
 		return
 	}
 
@@ -86,9 +87,9 @@ func (r *bookReposiroty) DeleteBook(bookID string) (err error) {
 	return
 }
 
-func (r *bookReposiroty) GetBook(bookID string) (book models.Book, err error) {
+func (r *bookRepository) GetBook(bookID string) (book models.Book, err error) {
 	if r.mainDbConn == nil {
-		err = helpers.NewError(fiber.StatusServiceUnavailable, helpers.WhereAmI(), "Database server has gone away")
+		err = helpers.NewError(fiber.StatusServiceUnavailable, helpers.WhereAmI(), constants.ErrDBGone)
 		return
 	}
 
@@ -99,9 +100,9 @@ func (r *bookReposiroty) GetBook(bookID string) (book models.Book, err error) {
 	return
 }
 
-func (r *bookReposiroty) GetBooks(criteria models.Book) (books []models.Book, err error) {
+func (r *bookRepository) GetBooks(criteria models.Book) (books []models.Book, err error) {
 	if r.mainDbConn == nil {
-		err = helpers.NewError(fiber.StatusServiceUnavailable, helpers.WhereAmI(), "Database server has gone away")
+		err = helpers.NewError(fiber.StatusServiceUnavailable, helpers.WhereAmI(), constants.ErrDBGone)
 		return
 	}
 
@@ -124,7 +125,7 @@ func (r *bookReposiroty) GetBooks(criteria models.Book) (books []models.Book, er
 	return
 }
 
-func (r *bookReposiroty) ImportBooks(books []models.Book) (errs []error) {
+func (r *bookRepository) ImportBooks(books []models.Book) (errs []error) {
 
 	errCh := make(chan error, (runtime.NumCPU()/2)+1)
 	defer close(errCh)
@@ -139,6 +140,6 @@ func (r *bookReposiroty) ImportBooks(books []models.Book) (errs []error) {
 	return
 }
 
-func (r *bookReposiroty) importBookChannel(book models.Book, errCh chan error) {
+func (r *bookRepository) importBookChannel(book models.Book, errCh chan error) {
 	errCh <- r.CreateBook(&book)
 }

@@ -2,7 +2,7 @@ package domain
 
 import "github.com/zercle/gofiber-skelton/pkg/models"
 
-type UserUsecase interface {
+type UserUseCase interface {
 	GetUser(userID string) (user models.User, err error)
 	GetUsers(criteria models.User) (users []models.User, err error)
 	CreateUser(user *models.User) (err error)
@@ -10,7 +10,7 @@ type UserUsecase interface {
 	DeleteUser(userID string) (err error)
 }
 
-type UserReposiroty interface {
+type UserRepository interface {
 	GetUser(userID string) (user models.User, err error)
 	GetUsers(criteria models.User) (users []models.User, err error)
 	CreateUser(user *models.User) (err error)

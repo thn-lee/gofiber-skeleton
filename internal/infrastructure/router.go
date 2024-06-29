@@ -33,12 +33,12 @@ func (s *Server) SetupRoutes(app *fiber.App) {
 	}
 
 	// App Services
-	bookUsecase := books.NewBookUsecase(bookRepository)
-	userUsecase := users.NewUserUsecase(userRepository)
+	bookUseCase := books.NewBookUseCase(bookRepository)
+	userUseCase := users.NewUserUseCase(userRepository)
 
 	// App Routes
-	books.NewBookHandler(app.Group("/api/v1/books"), bookUsecase)
-	users.NewUserHandler(app.Group("/api/v1/users"), userUsecase)
+	books.NewBookHandler(app.Group("/api/v1/books"), bookUseCase)
+	users.NewUserHandler(app.Group("/api/v1/users"), userUseCase)
 
 	// Prepare a fallback route to always serve the 'index.html', had there not be any matching routes.
 	app.Static("*", "./web/build/index.html")

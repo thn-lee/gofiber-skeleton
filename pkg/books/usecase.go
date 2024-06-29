@@ -7,22 +7,22 @@ import (
 	"github.com/zercle/gofiber-skelton/pkg/models"
 )
 
-type bookUsecase struct {
+type bookUseCase struct {
 	bookRepository domain.BookRepository
 }
 
-func NewBookUsecase(r domain.BookRepository) domain.BookUsecase {
-	return &bookUsecase{
+func NewBookUseCase(r domain.BookRepository) domain.BookUseCase {
+	return &bookUseCase{
 		bookRepository: r,
 	}
 }
 
-func (u *bookUsecase) DbMigrator() (err error) {
+func (u *bookUseCase) DbMigrator() (err error) {
 	err = u.bookRepository.DbMigrator()
 	return
 }
 
-func (u *bookUsecase) CreateBook(book *models.Book) (err error) {
+func (u *bookUseCase) CreateBook(book *models.Book) (err error) {
 	if len(book.Title) == 0 {
 		err = helpers.NewError(fiber.StatusBadRequest, helpers.WhereAmI(), helpers.WhereAmI(), "need: title")
 		return
@@ -34,18 +34,18 @@ func (u *bookUsecase) CreateBook(book *models.Book) (err error) {
 	return u.bookRepository.CreateBook(book)
 }
 
-func (u *bookUsecase) EditBook(bookID string, book models.Book) (err error) {
+func (u *bookUseCase) EditBook(bookID string, book models.Book) (err error) {
 	return u.bookRepository.EditBook(bookID, book)
 }
 
-func (u *bookUsecase) DeleteBook(bookID string) (err error) {
+func (u *bookUseCase) DeleteBook(bookID string) (err error) {
 	return u.bookRepository.DeleteBook(bookID)
 }
 
-func (u *bookUsecase) GetBook(bookID string) (book models.Book, err error) {
+func (u *bookUseCase) GetBook(bookID string) (book models.Book, err error) {
 	return u.bookRepository.GetBook(bookID)
 }
 
-func (u *bookUsecase) GetBooks(criteria models.Book) (books []models.Book, err error) {
+func (u *bookUseCase) GetBooks(criteria models.Book) (books []models.Book, err error) {
 	return u.bookRepository.GetBooks(criteria)
 }

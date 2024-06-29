@@ -9,18 +9,22 @@ type BookRepository struct {
 	mock.Mock
 }
 
-func (_m *BookRepository) GetBook(bookID uint) (book models.Book, err error) {
+func (_m *BookRepository) DbMigrator() (err error) {
+	return
+}
+
+func (_m *BookRepository) GetBook(bookID string) (book models.Book, err error) {
 	ret := _m.Called(bookID)
 
 	var r0 models.Book
-	if rf, ok := ret.Get(0).(func(uint) models.Book); ok {
+	if rf, ok := ret.Get(0).(func(string) models.Book); ok {
 		r0 = rf(bookID)
 	} else {
 		r0 = ret.Get(0).(models.Book)
 	}
 
 	var r1 error
-	if rf, ok := ret.Get(1).(func(uint) error); ok {
+	if rf, ok := ret.Get(1).(func(string) error); ok {
 		r1 = rf(bookID)
 	} else {
 		r1 = ret.Error(1)
@@ -60,11 +64,11 @@ func (_m *BookRepository) CreateBook(book *models.Book) (err error) {
 	return r0
 }
 
-func (_m *BookRepository) EditBook(bookID uint, book models.Book) (err error) {
+func (_m *BookRepository) EditBook(bookID string, book models.Book) (err error) {
 	ret := _m.Called(bookID, book)
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(uint, models.Book) error); ok {
+	if rf, ok := ret.Get(0).(func(string, models.Book) error); ok {
 		r0 = rf(bookID, book)
 	} else {
 		r0 = ret.Error(0)
@@ -72,11 +76,11 @@ func (_m *BookRepository) EditBook(bookID uint, book models.Book) (err error) {
 	return r0
 }
 
-func (_m *BookRepository) DeleteBook(bookID uint) (err error) {
+func (_m *BookRepository) DeleteBook(bookID string) (err error) {
 	ret := _m.Called(bookID)
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(uint) error); ok {
+	if rf, ok := ret.Get(0).(func(string) error); ok {
 		r0 = rf(bookID)
 	} else {
 		r0 = ret.Error(0)

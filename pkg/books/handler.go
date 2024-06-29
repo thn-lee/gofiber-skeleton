@@ -8,25 +8,25 @@ import (
 )
 
 type BookHandler struct {
-	bookUsecase domain.BookUsecase
+	bookUseCase domain.BookUseCase
 }
 
-func NewBookHandler(bookRoute fiber.Router, bookUsecase domain.BookUsecase) {
+func NewBookHandler(bookRoute fiber.Router, bookUseCase domain.BookUseCase) {
 
 	handler := &BookHandler{
-		bookUsecase: bookUsecase,
+		bookUseCase: bookUseCase,
 	}
 
-	bookRoute.Get("/:bookID?", handler.getBooks())
+	bookRoute.Get("/:bookID?", handler.GetBooks())
 }
 
-func (h *BookHandler) getBooks() fiber.Handler {
+func (h *BookHandler) GetBooks() fiber.Handler {
 	return func(c *fiber.Ctx) (err error) {
 		responseForm := helpers.ResponseForm{}
 
 		bookID := c.Params("bookID")
 		if len(bookID) != 0 {
-			book, err := h.bookUsecase.GetBook(bookID)
+			book, err := h.bookUseCase.GetBook(bookID)
 			if err != nil {
 				responseForm.Errors = append(responseForm.Errors, helpers.ResponseError{
 					Code:    fiber.StatusServiceUnavailable,
@@ -40,7 +40,7 @@ func (h *BookHandler) getBooks() fiber.Handler {
 			criteria := models.Book{}
 			criteria.Title = c.FormValue("title")
 			criteria.Author = c.FormValue("author")
-			books, err := h.bookUsecase.GetBooks(criteria)
+			books, err := h.bookUseCase.GetBooks(criteria)
 			if err != nil {
 				responseForm.Errors = append(responseForm.Errors, helpers.ResponseError{
 					Code:    fiber.StatusServiceUnavailable,
@@ -52,7 +52,7 @@ func (h *BookHandler) getBooks() fiber.Handler {
 			}
 		}
 
-		if err == nil {
+		if len(responseForm.Errors) == 0 {
 			responseForm.Success = true
 		}
 		return c.JSON(responseForm)
